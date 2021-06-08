@@ -7,6 +7,32 @@
   animation: dots 1s steps(5, end) infinite;
 }
 
+.max-h-12 {
+  max-height: 3rem;
+  // @media (max-width: "768px") {
+  //   max-height: 2.5rem;
+  // }
+}
+
+.text-primary {
+  color: #f0bd38;
+}
+
+.welcome-banner {
+  @media (max-width: 768px) {
+    &:before {
+      content: "";
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      position: absolute;
+      z-index: 1;
+    }
+  }
+}
+
 @keyframes dots {
   0%,
   20% {

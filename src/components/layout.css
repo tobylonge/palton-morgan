@@ -191,6 +191,7 @@ html {
 }
 * {
   box-sizing: inherit;
+  font-family: "Carrois Gothic", georgia, serif;
 }
 *:before {
   box-sizing: inherit;
