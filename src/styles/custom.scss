@@ -101,13 +101,26 @@
 
 .arrow {
   position: absolute;
-  top: calc(50% - 30px);
+  top: 50%;
+  transform: translateY(-50%);
   &-right {
     right: 0;
   }
   &-left {
     left: 0;
-    transform: rotate(180deg);
+    transform: translateY(-50%) rotate(180deg);
+  }
+}
+
+.property-slider {
+  .arrow {
+    &-left {
+      transform: translateY(-50%) rotate(0deg);
+    }
+  }
+
+  p.active {
+    border-bottom: 1px solid #000;
   }
 }
 
@@ -115,7 +128,8 @@
   .slick-dots {
     bottom: 0;
     width: auto;
-    left: calc(50% - 15px);
+    left: 50%;
+    transform: translateX(-50%);
     li {
       margin: 0;
     }
