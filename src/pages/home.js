@@ -35,7 +35,7 @@ export default function home() {
 
                 <Link
                   to="/subsidiaries/"
-                  class="inline-block bg-white hover:bg-yellow-600 text-black font-bold py-4 px-8 border border-yellow-600 rounded-md uppercase text-xl tracking-widest mt-12"
+                  clasName="inline-block bg-white hover:bg-yellow-600 text-black font-bold py-4 px-8 border border-yellow-600 rounded-md uppercase text-xl tracking-widest mt-12"
                 >
                   Start
                 </Link>
