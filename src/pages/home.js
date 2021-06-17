@@ -28,14 +28,14 @@ export default function home() {
             <Zoom>
               <div className="relative md:ml-10">
                 <h1 className="text-white md:text-black mb-2 leading-relaxed md:leading-normal md:text-5xl">
-                  Welcome! <br />{" "}
+                  Welcome! <br />
                   <span className="text-primary">Let's Explore</span>
                 </h1>
                 <img src={line} className="hidden md:block" />
 
                 <Link
                   to="/subsidiaries/"
-                  clasName="inline-block bg-white hover:bg-yellow-600 text-black font-bold py-4 px-8 border border-yellow-600 rounded-md uppercase text-xl tracking-widest mt-12"
+                  className="inline-block bg-white hover:bg-yellow-600 text-black font-bold py-4 px-8 border border-yellow-600 rounded-md uppercase text-xl tracking-widest mt-12"
                 >
                   Start
                 </Link>
