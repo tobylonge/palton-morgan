@@ -20,8 +20,6 @@ import propertyImg from "../images/property/gen/gallery/image-details.png"
 import bannerMobile from "../images/property/gen/gallery/banner-mobile.png"
 import Slider from "react-slick"
 import { isMobile } from "react-device-detect"
-import "slick-carousel/slick/slick.css"
-import "slick-carousel/slick/slick-theme.css"
 
 const Bedroom = [
   {
