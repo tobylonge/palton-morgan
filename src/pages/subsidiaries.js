@@ -1,4 +1,5 @@
 import React from "react"
+import Helmet from "react-helmet"
 import webBg from "../images/bg-1.png"
 import mobileBg from "../images/bg-1-mobile.png"
 import logo from "../images/palton_morgan_dark.png"
@@ -10,8 +11,9 @@ import Propertymart from "../images/subs/Propertymart.png"
 import Grenadines from "../images/subs/Grenadines.png"
 import Oceanna from "../images/subs/oceanna.png"
 import Slider from "react-slick"
-import "slick-carousel/slick/slick.css"
-import "slick-carousel/slick/slick-theme.css"
+import slick from "slick-carousel/slick/slick.css"
+import slickTheme from "slick-carousel/slick/slick-theme.css"
+console.log(slick, slickTheme)
 
 const subsidiaries = () => {
   const data = [
