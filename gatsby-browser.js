@@ -6,6 +6,6 @@
 
 // You can delete this file if you're not using it
 import "./src/styles/tailwind.css"
-import "./src/styles/slick.css"
-import "./src/styles/slick-theme.css"
+import "./src/styles/slick.scss"
+import "./src/styles/slick-theme.scss"
 import "./src/styles/custom.scss"

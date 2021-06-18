@@ -45,9 +45,14 @@ module.exports = {
     {
       resolve: `gatsby-plugin-purgecss`,
       options: {
-        printRejected: false,
-        develop: false,
+        printRejected: true,
+        develop: true,
         tailwind: true,
+        ignore: [
+          "/src/styles/slick-theme.scss",
+          "/src/styles/slick.scss",
+          "custom.scss",
+        ],
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
