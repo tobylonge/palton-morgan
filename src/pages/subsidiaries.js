@@ -13,7 +13,7 @@ import Oceanna from "../images/subs/oceanna.png"
 import Slider from "react-slick"
 import slick from "slick-carousel/slick/slick.css"
 import slickTheme from "slick-carousel/slick/slick-theme.css"
-console.log(slick, slickTheme)
+console.log({ slick }, { slickTheme })
 
 const subsidiaries = () => {
   const data = [
