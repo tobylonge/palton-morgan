@@ -19,7 +19,7 @@ export default function subCard(props) {
         <p className="text-gray-700 my-6">{props.text}</p>
         <Link
           to="/property"
-          className=" text-sm inline-block bg-white hover:bg-yellow-600 text-black font-bold py-2 px-6 border border-yellow-600 rounded-full uppercase tracking-widest"
+          className=" text-sm inline-block bg-white hover:bg-yellow-600 text-black font-bold py-2 px-6 border-2 border-yellow-600 rounded-full uppercase tracking-widest"
         >
           Explore
         </Link>

@@ -50,7 +50,7 @@ const property = () => {
     slidesToShow: 3,
     slidesToScroll: 1,
     className: "center",
-    // centerMode: true,
+    centerMode: true,
     centerPadding: "10px",
     responsive: [
       {
@@ -86,12 +86,12 @@ const property = () => {
       <div className="flex flex-col w-full">
         <div className="relative md:flex md:justify-center md:items-stretch md:w-full">
           <div
-            className="relative min-h-full md:min-h-screen py-12 px-6 md:w-full md:flex md:items-center md:justify-center"
+            className="relative min-h-full md:min-h-screen py-12 px-6 md:p-12 md:w-full md:flex md:items-center md:justify-center"
             style={{
               backgroundImage: `url(${Bg} )`,
             }}
           >
-            <div className="relative md:absolute top-0 left-0 right-0 md:mr-8 md:ml-8 md:mt-8 flex-col md:flex-row flex justify-between md:items-center">
+            <div className="relative md:absolute top-0 left-0 right-0 md:mr-16 md:ml-16 md:mt-12 flex-col md:flex-row flex justify-between md:items-center">
               <div className="w-1/3">
                 <BackBtn color={"#982A7D"} height={"20px"} />
               </div>
@@ -108,7 +108,10 @@ const property = () => {
               </div>
             </div>
             {/* <div className="flex flex-col md:flex-row justify-center md:justify-around"> */}
-            <Slider {...settings} className="overflow-hidden py-8 mt-12">
+            <Slider
+              {...settings}
+              className="overflow-hidden py-12 mt-24 property-slide"
+            >
               {data.map((el, key) => (
                 <PropertyCard key={key} {...el} />
               ))}

@@ -46,7 +46,7 @@ module.exports = {
       resolve: `gatsby-plugin-purgecss`,
       options: {
         printRejected: true,
-        develop: true,
+        develop: false,
         tailwind: true,
         ignore: [
           "/src/styles/slick-theme.scss",

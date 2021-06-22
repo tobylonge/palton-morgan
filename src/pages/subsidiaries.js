@@ -110,12 +110,12 @@ const subsidiaries = () => {
         </Zoom>
         <div className="relative md:flex md:justify-center md:items-stretch md:w-full">
           <div
-            className="relative h-full md:h-screen py-12 px-6 md:w-full md:flex md:items-center md:justify-center"
+            className="relative h-full md:h-screen py-12 px-6 md:p-12 md:w-full md:flex md:items-center md:justify-center"
             style={{
               backgroundImage: `url(${isMobile ? mobileBg : webBg} )`,
             }}
           >
-            <div className="absolute top-0 left-0 ml-8 mt-8 hidden md:block">
+            <div className="absolute top-0 left-0 ml-16 mt-8 hidden md:block">
               {/* <img src={backBtn} className="h-4 mr-2 mb-0" /> */}
               <BackBtn color={"#F0BD38"} height={"20px"} />
             </div>

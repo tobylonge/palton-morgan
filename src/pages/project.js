@@ -20,6 +20,7 @@ import propertyImg from "../images/property/gen/gallery/image-details.png"
 import bannerMobile from "../images/property/gen/gallery/banner-mobile.png"
 import Slider from "react-slick"
 import { isMobile } from "react-device-detect"
+import Modal from "../components/modal"
 
 const Bedroom = [
   {
@@ -323,166 +324,184 @@ const Project = () => {
   ]
 
   return (
-    <div className="relative min-h-full md:min-h-screen py-6 px-8 md:w-full md:flex md:items-start md:item-center flex-col">
-      <div className="relative flex-col md:flex-row flex justify-between md:items-center w-full">
-        <div className="">
-          <BackBtn color={"#982A7D"} height={"20px"} />
-        </div>
+    <>
+      <div className="relative min-h-full md:min-h-screen py-6 px-8 md:w-full md:flex md:items-start md:item-center flex-col">
+        <div className="relative flex-col md:flex-row flex justify-between md:items-center w-full">
+          <div className="">
+            <BackBtn color={"#982A7D"} height={"20px"} />
+          </div>
 
-        <div className="hidden md:block text-right">
-          <input
-            class="bg-transparent appearance-none border-2 border-pink-800 rounded-full py-2 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-sm"
-            id="inline-full-name"
-            type="text"
-            placeholder="Search"
-          />
-        </div>
-        <div className="md:hidden">
-          <img src={Grenadines} className="h-16 mx-auto m-0 mb-6" />
-          <img src={bannerMobile} className="w-full m-0" alt="" />
-        </div>
-      </div>
-      <div className="flex flex-col-reverse md:flex-row items-center w-full mt-12 md:w-4/5 mx-auto">
-        <div className="md:w-2/5 md:mr-4 mx-auto text-center">
-          <img
-            src={Grenadines}
-            className="hidden md:block h-32 mx-auto m-0 mb-6"
-          />
-          <Link className=" text-sm inline-block bg-white hover:bg-pink-500 text-black font-bold py-2 px-6 border border-pink-800 rounded-full uppercase tracking-widest">
-            EMAIL BROCHURE
-          </Link>
-        </div>
-        <div className="md:w-3/5 md:ml-4">
-          <div className="mb-8 text-center md:text-left">
-            <p className="uppercase text-2xl md:text-xl m-0 text-pink-800 font-medium">
-              PARAMOUNT TWIN TOWER
-            </p>
-            <p className="font-bold">From NGN 64,020,000</p>
-          </div>
-          <div>
-            <p className="uppercase text-xl m-0 text-pink-800 font-medium mb-4">
-              PARAMOUNT TWIN TOWER
-            </p>
-            <p className="text-gray-700 text-sm">
-              Enjoy the generous interior spaces and large windows inbuilt into
-              each of the units, the swings at the lawn tennis court, sunbathing
-              at the pool side and a lasting grin of relief that spread through
-              your face after an exercise in a state-of-the-art gym.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div className="flex items-center w-full mt-12 md:w-4/5 mx-auto">
-        <iframe
-          width="100%"
-          height={isMobile ? "180px" : `580px`}
-          src="https://www.youtube.com/embed/f3AcAO8iHVs?controls=0"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
-      </div>
-      <div className="flex items-center w-full mt-12 md:w-4/5 mx-auto flex-col">
-        <p className="uppercase text-lg m-0 text-pink-800 font-medium mb-6">
-          IMAGE GALLERY
-        </p>
-        <Slider
-          {...settings}
-          className="overflow-hidden w-full px-4 md:px-8 project-slider"
-        >
-          <div className="focus:outline-none">
-            <img src={img1} className="p-2 md:p-4 hover:" alt="" />
-          </div>
-          <div className="focus:outline-none">
-            <img src={img2} className="p-2 md:p-4" alt="" />
-          </div>
-          <div className="focus:outline-none">
-            <img src={img3} className="p-2 md:p-4" alt="" />
-          </div>
-          <div className="focus:outline-none">
-            <img src={img1} className="p-2 md:p-4" alt="" />
-          </div>
-          <div className="focus:outline-none">
-            <img src={img2} className="p-2 md:p-4" alt="" />
-          </div>
-          <div className="focus:outline-none">
-            <img src={img3} className="p-2 md:p-4" alt="" />
-          </div>
-        </Slider>
-      </div>
-      <div className="flex items-center w-full mt-12 md:w-4/5 mx-auto flex-col">
-        <p className="uppercase m-0 text-pink-800 font-medium mb-6">
-          exclusive features
-        </p>
-        <div className="flex w-full flex-wrap ">
-          {data.map(el => (
-            <Features {...el} key={el.id} />
-          ))}
-        </div>
-      </div>
-      <div className="flex items-center w-full mt-12 md:w-4/5 mx-auto flex-col">
-        <p className="uppercase m-0 text-pink-800 mb-6">select property type</p>
-        <Slider
-          {...settings2}
-          className="overflow-hidden w-full px-8 property-slider"
-        >
-          {Bedroom.map(el => (
-            <Property
-              {...el}
-              key={el.id}
-              setActiveNo={setActiveNo}
-              activeNo={activeNo}
-            />
-          ))}
-        </Slider>
-        {activeNo > 0 ? (
-          <BedroomRoomDetails id={activeNo} />
-        ) : (
-          <p>Loading...</p>
-        )}
-      </div>
-      <div className="md:w-3/5 mx-auto text-center">
-        <p className="uppercase m-0 text-pink-800 mb-6">make a reservation</p>
-        <div className="my-8 flex flex-wrap">
-          <div className="w-full md:w-1/2 md:px-8 mb-6">
+          <div className="hidden md:block text-right">
             <input
-              class="w-full bg-transparent appearance-none border border-pink-800 py-2 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
+              class="bg-transparent appearance-none border-2 border-pink-800 rounded-full py-2 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-sm"
               id="inline-full-name"
               type="text"
-              placeholder="Full Name"
+              placeholder="Search"
             />
           </div>
-          <div className="w-full md:w-1/2 md:px-8 mb-6">
-            <input
-              class="w-full bg-transparent appearance-none border border-pink-800 py-2 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
-              id="inline-full-name"
-              type="email"
-              placeholder="Email Address"
-            />
-          </div>
-          <div className="w-full md:w-1/2 md:px-8 mb-6">
-            <input
-              class="w-full bg-transparent appearance-none border border-pink-800 py-2 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
-              id="inline-full-name"
-              type="text"
-              placeholder="Phone Number"
-            />
-          </div>
-          <div className="w-full md:w-1/2 md:px-8 mb-6">
-            <input
-              class="w-full bg-transparent appearance-none border border-pink-800 py-2 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
-              id="inline-full-name"
-              type="text"
-              placeholder="Property Type"
-            />
+          <div className="md:hidden">
+            <img src={Grenadines} className="h-16 mx-auto m-0 mb-6" />
+            <img src={bannerMobile} className="w-full m-0" alt="" />
           </div>
         </div>
-        <button className=" text-sm inline-block bg-white hover:bg-pink-500 text-black py-2 px-6 border-2 border-pink-800 rounded-full uppercase tracking-widest">
-          SUBMIT
-        </button>
+        <div className="flex flex-col-reverse md:flex-row items-center w-full mt-12 md:w-4/5 mx-auto">
+          <div className="md:w-2/5 md:mr-4 mx-auto text-center">
+            <img
+              src={Grenadines}
+              className="hidden md:block h-32 mx-auto m-0 mb-6"
+            />
+            <Link className=" text-sm inline-block bg-white hover:bg-pink-800 hover:text-white text-black font-bold py-2 px-6 border-2 border-pink-800 rounded-full uppercase tracking-widest">
+              EMAIL BROCHURE
+            </Link>
+          </div>
+          <div className="md:w-3/5 md:ml-4">
+            <div className="mb-8 text-center md:text-left">
+              <h1 className="uppercase text-2xl md:text-xl m-0 text-pink-800 font-medium">
+                PARAMOUNT TWIN TOWER
+              </h1>
+              <p className="font-bold m-0">From NGN 64,020,000</p>
+              <p className="text-gray-700 text-sm">Victoria Island, Lagos</p>
+            </div>
+            <div>
+              <h2 className="uppercase text-xl m-0 text-pink-800 font-medium mb-4">
+                ABOUT PARAMOUNT TWIN TOWER
+              </h2>
+              <p className="text-gray-700 text-sm">
+                Enjoy the generous interior spaces and large windows inbuilt
+                into each of the units, the swings at the lawn tennis court,
+                sunbathing at the pool side and a lasting grin of relief that
+                spread through your face after an exercise in a state-of-the-art
+                gym.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="flex items-center w-full mt-12 md:w-4/5 mx-auto">
+          <iframe
+            width="100%"
+            height={isMobile ? "180px" : `580px`}
+            src="https://www.youtube.com/embed/f3AcAO8iHVs?controls=0"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div className="flex items-center w-full mt-12 md:w-4/5 mx-auto flex-col">
+          <p className="uppercase text-lg m-0 text-pink-800 font-medium mb-6">
+            IMAGE GALLERY
+          </p>
+          <Slider
+            {...settings}
+            className="overflow-hidden w-full px-4 md:px-8 project-slider"
+          >
+            <div className="focus:outline-none">
+              <img src={img1} className="p-2 md:p-4 hover:" alt="" />
+            </div>
+            <div className="focus:outline-none">
+              <img src={img2} className="p-2 md:p-4" alt="" />
+            </div>
+            <div className="focus:outline-none">
+              <img src={img3} className="p-2 md:p-4" alt="" />
+            </div>
+            <div className="focus:outline-none">
+              <img src={img1} className="p-2 md:p-4" alt="" />
+            </div>
+            <div className="focus:outline-none">
+              <img src={img2} className="p-2 md:p-4" alt="" />
+            </div>
+            <div className="focus:outline-none">
+              <img src={img3} className="p-2 md:p-4" alt="" />
+            </div>
+          </Slider>
+        </div>
+        <div className="flex items-center w-full mt-12 md:w-4/5 mx-auto flex-col">
+          <p className="uppercase m-0 text-pink-800 font-medium mb-6">
+            exclusive features
+          </p>
+          <div className="flex w-full flex-wrap ">
+            {data.map(el => (
+              <Features {...el} key={el.id} />
+            ))}
+          </div>
+        </div>
+        <div className="flex items-center w-full mt-12 md:w-4/5 mx-auto flex-col">
+          <p className="uppercase m-0 text-pink-800 mb-6">
+            select property type
+          </p>
+          <Slider
+            {...settings2}
+            className="overflow-hidden w-full px-8 property-slider"
+          >
+            {Bedroom.map(el => (
+              <Property
+                {...el}
+                key={el.id}
+                setActiveNo={setActiveNo}
+                activeNo={activeNo}
+              />
+            ))}
+          </Slider>
+          {activeNo > 0 ? (
+            <BedroomRoomDetails id={activeNo} />
+          ) : (
+            <p>Loading...</p>
+          )}
+        </div>
+        <div className="md:w-3/5 mx-auto text-center">
+          <p className="uppercase m-0 text-pink-800 mb-6">make a reservation</p>
+          <div className="my-8 flex flex-wrap">
+            <div className="w-full md:w-1/2 md:px-8 mb-6">
+              <input
+                class="w-full bg-transparent appearance-none border-2 border-pink-800 py-2 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
+                id="inline-full-name"
+                type="text"
+                placeholder="Full Name"
+              />
+            </div>
+            <div className="w-full md:w-1/2 md:px-8 mb-6">
+              <input
+                class="w-full bg-transparent appearance-none border-2 border-pink-800 py-2 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
+                id="inline-full-name"
+                type="email"
+                placeholder="Email Address"
+              />
+            </div>
+            <div className="w-full md:w-1/2 md:px-8 mb-6">
+              <input
+                class="w-full bg-transparent appearance-none border-2 border-pink-800 py-2 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
+                id="inline-full-name"
+                type="text"
+                placeholder="Phone Number"
+              />
+            </div>
+            <div class="w-full md:w-1/2 md:px-8 mb-6">
+              <div class="relative">
+                <select class="w-full appearance-none rounded-none bg-transparent border-2 border-pink-800 text-gray-700 py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase">
+                  <option>Property 1</option>
+                  <option>Property 2</option>
+                  <option>Property 3</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                  <svg
+                    class="fill-current h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button className=" text-sm inline-block bg-white hover:bg-pink-800 hover:text-white text-black py-2 px-6 border-2 border-pink-800 rounded-full uppercase tracking-widest focus:outline-none">
+            SUBMIT
+          </button>
+        </div>
       </div>
-    </div>
+
+      {/* <Modal /> */}
+    </>
   )
 }
 

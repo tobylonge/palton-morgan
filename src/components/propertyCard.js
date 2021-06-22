@@ -5,7 +5,7 @@ import Zoom from "react-reveal/Zoom"
 export default function propertyCard(props) {
   return (
     <Zoom>
-      <div className="max-w-sm rounded overflow-hidden shadow-lg text-center bg-white mt-8 md:mt-0 md:mx-4 flex flex-col items-center justify-end md:h-full">
+      <div className="max-w-sm rounded overflow-hidden shadow-lg text-center bg-white mt-8 md:mt-0 flex flex-col items-center justify-end md:h-full">
         <img
           src={props.imgUrl}
           alt=""
@@ -20,7 +20,7 @@ export default function propertyCard(props) {
           <p className="text-gray-700 text-sm">{props.text}</p>
           <Link
             to="/project"
-            className=" text-sm inline-block bg-white hover:bg-pink-500 text-black font-bold py-2 px-6 border border-pink-800 rounded-full uppercase tracking-widest"
+            className=" text-sm inline-block bg-white hover:bg-pink-800 hover:text-white text-black font-bold py-2 px-6 border-2 border-pink-800 rounded-full uppercase tracking-widest"
           >
             LEARN MORE
           </Link>
