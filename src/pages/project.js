@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import { Link } from "gatsby"
 import {
   BackBtn,
@@ -229,13 +229,29 @@ const BedroomRoomDetails = props => {
 
 const Project = () => {
   const [activeNo, setActiveNo] = useState(1)
+  const [brochureModal, setBrochureModal] = useState(false)
+  const [brochureSuccessModal, setBrochureSuccessModal] = useState(false)
+  const [gallery, setGallery] = useState(false)
+  // const [smallNav, setSmallNav] = useState(null)
+  // const [largeNav, setLargeNav] = useState(null)
+  // const smallSlider = useRef(null)
+  // const largeSlider = useRef(null)
+  const [nav1, setNav1] = useState()
+  const [nav2, setNav2] = useState()
+  const [currentSlide, setCurrentSlide] = useState(0)
+  // let smallSlider = []
+  // let largeSlider = []
+
   const settings = {
     dots: true,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
+    swipeToSlide: true,
+    focusOnSelect: true,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
+    beforeChange: (current, next) => setCurrentSlide(next),
     responsive: [
       {
         breakpoint: 1024,
@@ -273,6 +289,15 @@ const Project = () => {
         },
       },
     ],
+  }
+
+  const gallerySettings = {
+    dots: true,
+    fade: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
   }
 
   const data = [
@@ -323,6 +348,14 @@ const Project = () => {
     },
   ]
 
+  const sendBrochure = () => {
+    setBrochureSuccessModal(true)
+  }
+
+  const openGallery = () => {
+    setGallery(true)
+  }
+
   return (
     <>
       <div className="relative min-h-full md:min-h-screen py-6 px-8 md:w-full md:flex md:items-start md:item-center flex-col">
@@ -350,9 +383,12 @@ const Project = () => {
               src={Grenadines}
               className="hidden md:block h-32 mx-auto m-0 mb-6"
             />
-            <Link className=" text-sm inline-block bg-white hover:bg-pink-800 hover:text-white text-black font-bold py-2 px-6 border-2 border-pink-800 rounded-full uppercase tracking-widest">
+            <button
+              className="focus:outline-none text-sm inline-block bg-white hover:bg-pink-800 hover:text-white text-black font-bold py-2 px-6 border-2 border-pink-800 rounded-full uppercase tracking-widest"
+              onClick={() => setBrochureModal(true)}
+            >
               EMAIL BROCHURE
-            </Link>
+            </button>
           </div>
           <div className="md:w-3/5 md:ml-4">
             <div className="mb-8 text-center md:text-left">
@@ -393,28 +429,31 @@ const Project = () => {
           </p>
           <Slider
             {...settings}
+            asNavFor={nav1}
+            ref={slider2 => setNav2(slider2)}
             className="overflow-hidden w-full px-4 md:px-8 project-slider"
           >
-            <div className="focus:outline-none">
+            <div className="focus:outline-none" onClick={() => openGallery()}>
               <img src={img1} className="p-2 md:p-4 hover:" alt="" />
             </div>
-            <div className="focus:outline-none">
+            <div className="focus:outline-none" onClick={() => openGallery()}>
               <img src={img2} className="p-2 md:p-4" alt="" />
             </div>
-            <div className="focus:outline-none">
+            <div className="focus:outline-none" onClick={() => openGallery()}>
               <img src={img3} className="p-2 md:p-4" alt="" />
             </div>
-            <div className="focus:outline-none">
+            <div className="focus:outline-none" onClick={() => openGallery()}>
               <img src={img1} className="p-2 md:p-4" alt="" />
             </div>
-            <div className="focus:outline-none">
+            <div className="focus:outline-none" onClick={() => openGallery()}>
               <img src={img2} className="p-2 md:p-4" alt="" />
             </div>
-            <div className="focus:outline-none">
+            <div className="focus:outline-none" onClick={() => openGallery()}>
               <img src={img3} className="p-2 md:p-4" alt="" />
             </div>
           </Slider>
         </div>
+
         <div className="flex items-center w-full mt-12 md:w-4/5 mx-auto flex-col">
           <p className="uppercase m-0 text-pink-800 font-medium mb-6">
             exclusive features
@@ -499,8 +538,89 @@ const Project = () => {
           </button>
         </div>
       </div>
-
-      {/* <Modal /> */}
+      {/* brochureModal */}
+      {brochureModal && (
+        <Modal
+          title={brochureSuccessModal ? "THANK YOU" : "Email Brochure"}
+          closeModal={() => setBrochureModal(false)}
+          submit={
+            brochureSuccessModal
+              ? () => setBrochureModal(false)
+              : () => sendBrochure()
+          }
+          submitText={brochureSuccessModal && "Back To Project"}
+        >
+          {!brochureSuccessModal ? (
+            <div className=" flex flex-wrap">
+              <div className="w-full md:px-8 mb-6">
+                <input
+                  class="w-full bg-transparent appearance-none border-2 border-pink-800 py-4 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
+                  id="inline-full-name"
+                  type="text"
+                  placeholder="Enter Full Name"
+                />
+              </div>
+              <div className="w-full md:px-8 mb-6">
+                <input
+                  class="w-full bg-transparent appearance-none border-2 border-pink-800 py-4 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
+                  id="inline-full-name"
+                  type="email"
+                  placeholder="Enter Email Address"
+                />
+              </div>
+              <div className="w-full md:px-8 mb-6">
+                <input
+                  class="w-full bg-transparent appearance-none border-2 border-pink-800 py-4 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
+                  id="inline-full-name"
+                  type="text"
+                  placeholder="Enter Phone Number"
+                />
+              </div>
+            </div>
+          ) : (
+            <p>
+              A copy of paramount twin tower brochure has been sent to the
+              provided email.
+            </p>
+          )}
+        </Modal>
+      )}
+      {/* Gallery */}
+      {gallery && (
+        <Modal closeModal={() => setGallery(false)}>
+          <Slider
+            {...gallerySettings}
+            className="overflow-hidden w-full px-4 md:px-8 project-slider"
+            asNavFor={nav2}
+            ref={slider1 => {
+              console.log("slider1 ", slider1)
+              return slider1
+                ? slider1.slickGoTo(currentSlide)
+                : setNav1(slider1)
+            }}
+            // ref={slider => (slider ? slider.slickGoTo(+props.slideToIndex || 0) : '')}
+          >
+            <div className="focus:outline-none">
+              <img src={img1} className="w-full" alt="" />
+            </div>
+            <div className="focus:outline-none">
+              <img src={img2} className="w-full" alt="" />
+            </div>
+            <div className="focus:outline-none">
+              <img src={img3} className="w-full" alt="" />
+            </div>
+            <div className="focus:outline-none">
+              <img src={img1} className="w-full" alt="" />
+            </div>
+            <div className="focus:outline-none">
+              <img src={img2} className="w-full" alt="" />
+            </div>
+            <div className="focus:outline-none">
+              <img src={img3} className="w-full" alt="" />
+            </div>
+          </Slider>
+        </Modal>
+      )}
     </>
   )
 }
