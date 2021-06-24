@@ -104,7 +104,11 @@ const subsidiaries = () => {
           </div>
           <div className="mb-2 flex items-center justify-center md:hidden">
             {/* <img src={backBtn} className="h-4 mr-2 mb-0" /> */}
-            <BackBtn color={"#F0BD38"} height={"20px"} />
+            <BackBtn
+              color={"#F0BD38"}
+              height={"20px"}
+              onClick={() => window.history.back()}
+            />
             <p className="ml-2 m-0">Back</p>
           </div>
         </Zoom>
@@ -117,7 +121,11 @@ const subsidiaries = () => {
           >
             <div className="absolute top-0 left-0 ml-16 mt-8 hidden md:block">
               {/* <img src={backBtn} className="h-4 mr-2 mb-0" /> */}
-              <BackBtn color={"#F0BD38"} height={"20px"} />
+              <BackBtn
+                color={"#F0BD38"}
+                height={"20px"}
+                onClick={() => window.history.back()}
+              />
             </div>
             {/* <div className="flex flex-col md:flex-row justify-center md:justify-around"> */}
             <Slider {...settings} className="overflow-hidden unset">

@@ -361,7 +361,11 @@ const Project = () => {
       <div className="relative min-h-full md:min-h-screen py-6 px-8 md:w-full md:flex md:items-start md:item-center flex-col">
         <div className="relative flex-col md:flex-row flex justify-between md:items-center w-full">
           <div className="">
-            <BackBtn color={"#982A7D"} height={"20px"} />
+            <BackBtn
+              color={"#982A7D"}
+              height={"20px"}
+              onClick={() => window.history.back()}
+            />
           </div>
 
           <div className="hidden md:block text-right">
