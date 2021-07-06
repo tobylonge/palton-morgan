@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react"
 import { Link } from "gatsby"
+import axios from "axios"
+import { useForm } from "react-hook-form"
 import {
   BackBtn,
   ArrowRight,
@@ -21,6 +23,7 @@ import bannerMobile from "../images/property/gen/gallery/banner-mobile.png"
 import Slider from "react-slick"
 import { isMobile } from "react-device-detect"
 import Modal from "../components/modal"
+import { PhoneIcon } from "@heroicons/react/outline"
 
 const Bedroom = [
   {
@@ -232,15 +235,26 @@ const Project = () => {
   const [brochureModal, setBrochureModal] = useState(false)
   const [brochureSuccessModal, setBrochureSuccessModal] = useState(false)
   const [gallery, setGallery] = useState(false)
-  // const [smallNav, setSmallNav] = useState(null)
-  // const [largeNav, setLargeNav] = useState(null)
-  // const smallSlider = useRef(null)
-  // const largeSlider = useRef(null)
   const [nav1, setNav1] = useState()
   const [nav2, setNav2] = useState()
   const [currentSlide, setCurrentSlide] = useState(0)
-  // let smallSlider = []
-  // let largeSlider = []
+  const [reservationSuccess, setReservationSuccess] = useState(false)
+  const [infoModalReservation, setInfoModalReservation] = useState(false)
+  const [brochureSuccess, setBrochureSuccess] = useState(false)
+  const {
+    register: registerReservation,
+    handleSubmit: handleReservation,
+    reset: resetReservation,
+    formState: { errors: reservationError },
+  } = useForm()
+  const {
+    register: registerBrochure,
+    handleSubmit: handleBrochure,
+    reset: resetBrochure,
+    formState: { errors: brochureError },
+  } = useForm()
+
+  const apiUrl = "https://paltonmorgan.com.ng/public/api"
 
   const settings = {
     dots: true,
@@ -354,6 +368,73 @@ const Project = () => {
 
   const openGallery = () => {
     setGallery(true)
+  }
+
+  const submitBrochureDetails = handleBrochure(data => {
+    const body = {
+      name: data.fullName,
+      email: data.emailAddress,
+      phone: data.phoneNumber,
+      file_name: "Grenadine homes files",
+      attachment:
+        "https://paltonmorgan.com.ng/public/brochure/chukwunonyerem-maxwell.pdf",
+    }
+    console.log("body ", body)
+    axios({
+      method: "post",
+      url: `${apiUrl}/sendBrochure`,
+      data: body,
+    })
+      .then(function (response) {
+        if (response.status === 200) {
+          resetBrochure({ fullName: "", emailAddress: "", phoneNumber: "" })
+          setBrochureSuccess(true)
+          setBrochureSuccessModal(true)
+        } else {
+          setBrochureSuccess(false)
+          setBrochureSuccessModal(true)
+        }
+        console.log(response)
+      })
+      .catch(function (error) {
+        setBrochureSuccess(false)
+        setBrochureSuccessModal(true)
+        console.log(error)
+      })
+  })
+
+  const makeReservation = handleReservation(el => {
+    console.log("el ", el)
+    axios({
+      method: "post",
+      url: `${apiUrl}/makeReservation`,
+      data: el,
+    })
+      .then(function (response) {
+        if (response.status === 200) {
+          resetReservation({ name: "", email: "", property: "", phone: "" })
+          setReservationSuccess(true)
+          setInfoModalReservation(true)
+        } else {
+          setReservationSuccess(false)
+          setInfoModalReservation(true)
+        }
+        console.log(response)
+      })
+      .catch(function (error) {
+        setReservationSuccess(false)
+        setInfoModalReservation(true)
+        console.log(error)
+      })
+  })
+
+  const closeReservationModal = () => {
+    setInfoModalReservation(false)
+  }
+
+  const closeBrochureModal = () => {
+    setBrochureModal(false)
+    setBrochureSuccessModal(false)
   }
 
   return (
@@ -493,99 +574,187 @@ const Project = () => {
         </div>
         <div className="md:w-3/5 mx-auto text-center">
           <p className="uppercase m-0 text-pink-800 mb-6">make a reservation</p>
-          <div className="my-8 flex flex-wrap">
-            <div className="w-full md:w-1/2 md:px-8 mb-6">
-              <input
-                class="w-full bg-transparent appearance-none border-2 border-pink-800 py-2 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
-                id="inline-full-name"
-                type="text"
-                placeholder="Full Name"
-              />
-            </div>
-            <div className="w-full md:w-1/2 md:px-8 mb-6">
-              <input
-                class="w-full bg-transparent appearance-none border-2 border-pink-800 py-2 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
-                id="inline-full-name"
-                type="email"
-                placeholder="Email Address"
-              />
-            </div>
-            <div className="w-full md:w-1/2 md:px-8 mb-6">
-              <input
-                class="w-full bg-transparent appearance-none border-2 border-pink-800 py-2 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
-                id="inline-full-name"
-                type="text"
-                placeholder="Phone Number"
-              />
-            </div>
-            <div class="w-full md:w-1/2 md:px-8 mb-6">
-              <div class="relative">
-                <select class="w-full appearance-none rounded-none bg-transparent border-2 border-pink-800 text-gray-700 py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase">
-                  <option>Property 1</option>
-                  <option>Property 2</option>
-                  <option>Property 3</option>
-                </select>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <svg
-                    class="fill-current h-4 w-4"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
+          <form onSubmit={makeReservation}>
+            <div className="my-8 flex flex-wrap">
+              <div className="w-full md:w-1/2 md:px-8 mb-6">
+                <input
+                  class="w-full bg-transparent appearance-none border-2 border-pink-800 py-2 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
+                  id="inline-full-name"
+                  type="text"
+                  placeholder="Full Name"
+                  {...registerReservation("name", { required: true })}
+                />
+                {reservationError.name && (
+                  <span className="text-left block text-xs text-red-600">
+                    Please enter your full name
+                  </span>
+                )}
+              </div>
+              <div className="w-full md:w-1/2 md:px-8 mb-6">
+                <input
+                  class="w-full bg-transparent appearance-none border-2 border-pink-800 py-2 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
+                  id="inline-full-name"
+                  type="email"
+                  placeholder="Email Address"
+                  {...registerReservation("email", { required: true })}
+                />
+                {reservationError.email && (
+                  <span className="text-left block text-xs text-red-600">
+                    Please enter your email address
+                  </span>
+                )}
+              </div>
+              <div className="w-full md:w-1/2 md:px-8 mb-6">
+                <input
+                  class="w-full bg-transparent appearance-none border-2 border-pink-800 py-2 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
+                  id="inline-full-name"
+                  type="number"
+                  placeholder="Phone Number"
+                  {...registerReservation("phone", { required: true })}
+                />
+                {reservationError.phone && (
+                  <span className="text-left block text-xs text-red-600">
+                    Please enter your phone number
+                  </span>
+                )}
+              </div>
+              <div class="w-full md:w-1/2 md:px-8 mb-6">
+                <div class="relative">
+                  <select
+                    {...registerReservation("property")}
+                    class="w-full appearance-none rounded-none bg-transparent border-2 border-pink-800 text-gray-700 py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
                   >
-                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                  </svg>
+                    <option value="property1">Property 1</option>
+                    <option value="property2">Property 2</option>
+                    <option value="property3">Property 3</option>
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg
+                      class="fill-current h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <button className=" text-sm inline-block bg-white hover:bg-pink-800 hover:text-white text-black py-2 px-6 border-2 border-pink-800 rounded-full uppercase tracking-widest focus:outline-none">
-            SUBMIT
-          </button>
+            <button
+              type="submit"
+              className=" text-sm inline-block bg-white hover:bg-pink-800 hover:text-white text-black py-2 px-6 border-2 border-pink-800 rounded-full uppercase tracking-widest focus:outline-none"
+            >
+              SUBMIT
+            </button>
+          </form>
         </div>
       </div>
       {/* brochureModal */}
       {brochureModal && (
         <Modal
-          title={brochureSuccessModal ? "THANK YOU" : "Email Brochure"}
-          closeModal={() => setBrochureModal(false)}
-          submit={
-            brochureSuccessModal
-              ? () => setBrochureModal(false)
-              : () => sendBrochure()
+          title={
+            !brochureSuccessModal
+              ? "Email Brochure"
+              : brochureSuccess
+              ? "THANK YOU"
+              : "APOLOGIES"
           }
-          submitText={brochureSuccessModal && "Back To Project"}
+          closeModal={() => setBrochureModal(false)}
+          // submit={
+          //   brochureSuccessModal
+          //     ? () => setBrochureModal(false)
+          //     : () => sendBrochure()
+          // }
         >
           {!brochureSuccessModal ? (
-            <div className=" flex flex-wrap">
-              <div className="w-full md:px-8 mb-6">
-                <input
-                  class="w-full bg-transparent appearance-none border-2 border-pink-800 py-4 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
-                  id="inline-full-name"
-                  type="text"
-                  placeholder="Enter Full Name"
-                />
+            <form onSubmit={submitBrochureDetails}>
+              <div className=" flex flex-wrap">
+                <div className="w-full md:px-8 mb-6">
+                  <input
+                    class="w-full bg-transparent appearance-none border-2 border-pink-800 py-4 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
+                    type="text"
+                    placeholder="Enter Full Name"
+                    {...registerBrochure("fullName", { required: true })}
+                  />
+                  {brochureError.fullName && (
+                    <span className="text-left block text-xs text-red-600">
+                      Please enter your full name
+                    </span>
+                  )}
+                </div>
+                <div className="w-full md:px-8 mb-6">
+                  <input
+                    class="w-full bg-transparent appearance-none border-2 border-pink-800 py-4 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
+                    id="inline-full-name"
+                    type="email"
+                    placeholder="Enter Email Address"
+                    {...registerBrochure("emailAddress", { required: true })}
+                  />
+                  {brochureError.emailAddress && (
+                    <span className="text-left block text-xs text-red-600">
+                      Please enter your email
+                    </span>
+                  )}
+                </div>
+                <div className="w-full md:px-8 mb-6">
+                  <input
+                    class="w-full bg-transparent appearance-none border-2 border-pink-800 py-4 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
+                    id="inline-full-name"
+                    type="number"
+                    placeholder="Enter Phone Number"
+                    {...registerBrochure("phoneNumber", { required: true })}
+                  />
+                  {brochureError.phoneNumber && (
+                    <span className="text-left block text-xs text-red-600">
+                      Please enter your phone number
+                    </span>
+                  )}
+                </div>
+                {/*footer*/}
+                <div className="flex items-center justify-end px-6 pb-12 rounded-b w-full">
+                  <button
+                    type="submit"
+                    className=" text-sm inline-block bg-white hover:bg-pink-800 hover:text-white text-black py-2 px-6 border-2 border-pink-800 rounded-full uppercase tracking-widest focus:outline-none mx-auto"
+                  >
+                    Submit
+                  </button>
+                </div>
               </div>
-              <div className="w-full md:px-8 mb-6">
-                <input
-                  class="w-full bg-transparent appearance-none border-2 border-pink-800 py-4 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
-                  id="inline-full-name"
-                  type="email"
-                  placeholder="Enter Email Address"
-                />
+            </form>
+          ) : brochureSuccess ? (
+            <>
+              <p>
+                A copy of paramount twin tower brochure has been sent to the
+                provided email.
+              </p>
+              {/*footer*/}
+              <div className="flex items-center justify-end px-6 pb-12 rounded-b w-full">
+                <button
+                  type="submit"
+                  className=" text-sm inline-block bg-white hover:bg-pink-800 hover:text-white text-black py-2 px-6 border-2 border-pink-800 rounded-full uppercase tracking-widest focus:outline-none mx-auto"
+                  onClick={() => closeBrochureModal()}
+                >
+                  Back to Project
+                </button>
               </div>
-              <div className="w-full md:px-8 mb-6">
-                <input
-                  class="w-full bg-transparent appearance-none border-2 border-pink-800 py-4 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-xs uppercase"
-                  id="inline-full-name"
-                  type="text"
-                  placeholder="Enter Phone Number"
-                />
-              </div>
-            </div>
+            </>
           ) : (
-            <p>
-              A copy of paramount twin tower brochure has been sent to the
-              provided email.
-            </p>
+            <>
+              <p>
+                Oops! Something went wrong! The application has encountered an
+                unknown error. Please try again
+              </p>
+              {/*footer*/}
+              <div className="flex items-center justify-end px-6 pb-12 rounded-b w-full">
+                <button
+                  type="submit"
+                  className=" text-sm inline-block bg-white hover:bg-pink-800 hover:text-white text-black py-2 px-6 border-2 border-pink-800 rounded-full uppercase tracking-widest focus:outline-none mx-auto"
+                  onClick={() => closeBrochureModal()}
+                >
+                  Close
+                </button>
+              </div>
+            </>
           )}
         </Modal>
       )}
@@ -597,7 +766,6 @@ const Project = () => {
             className="overflow-hidden w-full px-4 md:px-8 project-slider"
             asNavFor={nav2}
             ref={slider1 => {
-              console.log("slider1 ", slider1)
               return slider1
                 ? slider1.slickGoTo(currentSlide)
                 : setNav1(slider1)
@@ -623,6 +791,29 @@ const Project = () => {
               <img src={img3} className="w-full" alt="" />
             </div>
           </Slider>
+        </Modal>
+      )}
+
+      {infoModalReservation && (
+        <Modal
+          title={reservationSuccess ? "THANK YOU" : "APOLOGIES"}
+          closeModal={() => setInfoModalReservation(false)}
+        >
+          <p>
+            {reservationSuccess
+              ? "Your reservation has been submitted. A sales representative will contact you shortly to walk you through the purchase process."
+              : "Oops! Something went wrong! The application has encountered an unknown error. Please try again"}
+          </p>
+          {/*footer*/}
+          <div className="flex items-center justify-end px-6 pb-12 rounded-b w-full">
+            <button
+              type="submit"
+              className=" text-sm inline-block bg-white hover:bg-pink-800 hover:text-white text-black py-2 px-6 border-2 border-pink-800 rounded-full uppercase tracking-widest focus:outline-none mx-auto"
+              onClick={() => closeReservationModal()}
+            >
+              Close
+            </button>
+          </div>
         </Modal>
       )}
     </>

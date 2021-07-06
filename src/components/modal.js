@@ -34,17 +34,6 @@ const Modal = props => {
             <div className="relative p-3 md:p-6 flex-auto text-center">
               {props.children}
             </div>
-            {/*footer*/}
-            {props.submit && (
-              <div className="flex items-center justify-end px-6 pb-12 rounded-b">
-                <button
-                  className=" text-sm inline-block bg-white hover:bg-pink-800 hover:text-white text-black py-2 px-6 border-2 border-pink-800 rounded-full uppercase tracking-widest focus:outline-none mx-auto"
-                  onClick={props.submit}
-                >
-                  {props.submitText ? props.submitText : "Submit"}
-                </button>
-              </div>
-            )}
           </div>
         </div>
       </div>
