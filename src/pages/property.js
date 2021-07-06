@@ -91,7 +91,7 @@ const property = () => {
               backgroundImage: `url(${Bg} )`,
             }}
           >
-            <div className="relative md:absolute top-0 left-0 right-0 md:mr-16 md:ml-16 md:mt-12 flex-col md:flex-row flex justify-between md:items-center">
+            <div className="relative md:absolute top-0 left-0 right-0 md:pr-4 md:pl-4 md:mr-16 md:ml-16 md:mt-12 flex-col md:flex-row flex justify-between md:items-center">
               <div className="w-1/3">
                 <BackBtn
                   color={"#982A7D"}
