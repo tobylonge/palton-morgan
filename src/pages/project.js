@@ -254,7 +254,8 @@ const Project = () => {
     formState: { errors: brochureError },
   } = useForm()
 
-  const apiUrl = "https://paltonmorgan.com.ng/public/api"
+  const apiUrl = "https://paltonmorgan.com.ng/collections/public/api"
+  // https://paltonmorgan.com.ng/collections/public/api/makeReservation
 
   const settings = {
     dots: true,
@@ -449,14 +450,14 @@ const Project = () => {
             />
           </div>
 
-          <div className="hidden md:block text-right">
+          {/* <div className="hidden md:block text-right">
             <input
               class="bg-transparent appearance-none border-2 border-pink-800 rounded-full py-2 px-4 text-gray-700 placeholder-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-pink-700 text-sm"
               id="inline-full-name"
               type="text"
               placeholder="Search"
             />
-          </div>
+          </div> */}
           <div className="md:hidden">
             <img src={Grenadines} className="h-16 mx-auto m-0 mb-6" />
             <img src={bannerMobile} className="w-full m-0" alt="" />
